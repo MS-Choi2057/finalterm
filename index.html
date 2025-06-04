@@ -8,13 +8,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Song+Myung&display=swap" rel="stylesheet">
     <style>
-  @font-face {
-    font-family: 'establishRetrosansOTF';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff') format('woff');
+@font-face {
+    font-family: 'RixYeoljeongdo_Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
         body, html {
+            overflow: hidden;
             cursor: url(cursor.cur), auto;
             margin: 0;
             padding: 0;
@@ -50,7 +51,7 @@
         }
         
         .header {
-            font-family: 'establishRetrosansOTF';
+            font-family: 'RixYeoljeongdo_Regular';
             padding: 20px;
             color: #fff;
             text-align: center;
@@ -59,7 +60,7 @@
         .title-container {
             padding-top: 50px;
             font-size: 50px;
-            font-weight: bold;
+            font-weight: medium;
             margin-bottom: 20px;
             display: flex;
             justify-content: center;
@@ -77,7 +78,7 @@
         }
         
         .title-letter {
-            padding-right: 5px;
+            padding-right: 0;
             display: inline-block;
             animation: pulseLetter 2s infinite;
         }
@@ -185,10 +186,48 @@
             border-radius: 5px;
             color: red;
         }
+
+        /* 스페이스바 안내 텍스트 */
+        .spacebar-hint {
+            position: fixed;
+            bottom: 150px;
+            left: 235px;
+            color: #ff0000;
+            font-family: 'Orbit', sans-serif;
+            font-size: 20px;
+            background: rgba(0,0,0,1);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        /* 떨어지는 글자 효과 */
+        .falling-letter {
+            position: fixed;
+            color: #ff0000;
+            font-family: 'orbit';
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10;
+            pointer-events: none;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            animation: fall linear;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(360deg);
+                opacity: 0.6;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="background"></div>
+    <div class="background" id="background"></div>
     
     <div class="content">
         <div class="header">
@@ -219,7 +258,7 @@
         <div class="files-container">
             <div class="files">
                 <div class="file text-file">
-                    <div class="file-icon"><a href="https://ms-choi2057.github.io/finalterm2/"><img src="icon2.png"></div></a>
+                    <div class="file-icon"><a href="https://ms-choi2057.github.io/finalterm7/"><img src="icon2.png"></div></a>
                     <div class="file-name">스트라이샌드_효과란?.txt</div>
                 </div>
                 
@@ -261,5 +300,114 @@
             </div>
         </div>
     </div>
+
+    <div class="spacebar-hint">스페이스바를 눌러 배경을 변경하세요</div>
+
+    <script>
+        // 배경 이미지 배열
+        const backgrounds = [
+            {
+                main: 'background1.png',
+                glitch: 'glitch.gif'
+            },
+            {
+                main: 'background2.png',
+                glitch: 'glitch.gif'
+            },
+            {
+                main: 'background3.png',
+                glitch: 'glitch.gif'
+            },
+        ];
+
+        let currentBackgroundIndex = 0;
+        const backgroundElement = document.getElementById('background');
+
+        // 떨어질 글자들 (한국어 문자, 특수문자, 숫자 포함)
+        const fallingCharacters = [
+            '숨', '김', '비', '밀', '검', '열', '차', '단', '금', '지', '폐', '쇄',
+            '은', '닉', '감', '추', '정', '보', '기', '밀', '문', '서', '파', '일',
+            '데', '이', '터', '해', '킹', '바', '이', '러', '스', '트', '로', '이',
+            '木', '金', '水', '火', '土', '秘', '密', '隱', '藏', '禁', '止',
+            '█', '▓', '▒', '░', '◆', '◇', '■', '□', '●', '○', '▲', '△',
+            '0', '1', '#', '*', '&', '%', '@', '!', '?', '~', '+', '-', '=',
+            'X', 'Y', 'Z', 'A', 'B', 'C', 'ERROR', 'NULL', '404', 'BUG'
+        ];
+
+        // 떨어지는 글자 생성 함수
+        function createFallingLetter() {
+            const letter = document.createElement('div');
+            letter.className = 'falling-letter';
+            letter.textContent = fallingCharacters[Math.floor(Math.random() * fallingCharacters.length)];
+            
+            // 랜덤 위치 설정
+            letter.style.left = Math.random() * window.innerWidth + 'px';
+            letter.style.top = '-100px';
+            
+            // 랜덤 애니메이션 속도 (3~8초)
+            const duration = Math.random() * 5 + 1;
+            letter.style.animationDuration = duration + 's';
+            
+            // 랜덤 크기 (14~24px)
+            const size = Math.random() * 15 + 30;
+            letter.style.fontSize = size + 'px';
+            
+            // 랜덤 투명도
+            letter.style.opacity = Math.random() * 0.7 + 0.3;
+            
+            document.body.appendChild(letter);
+            
+            // 애니메이션 완료 후 요소 제거
+            setTimeout(() => {
+                if (letter.parentNode) {
+                    letter.parentNode.removeChild(letter);
+                }
+            }, duration * 1500);
+        }
+
+        // 떨어지는 글자 효과 시작
+        function startFallingLetters() {
+            // 0.5~2초마다 새로운 글자 생성
+            setTimeout(() => {
+                createFallingLetter();
+                startFallingLetters();
+            }, Math.random() * 1500 + 500);
+        }
+
+        // 스페이스바 이벤트 리스너
+        document.addEventListener('keydown', function(event) {
+            // 스페이스바가 눌렸을 때 (키코드 32 또는 ' ')
+            if (event.code === 'Space') {
+                event.preventDefault(); // 페이지 스크롤 방지
+                
+                // 다음 배경으로 변경
+                currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+                const currentBg = backgrounds[currentBackgroundIndex];
+                
+                // 배경 이미지 변경
+                backgroundElement.style.backgroundImage = `
+                    url(${currentBg.main}),
+                    url(${currentBg.glitch})
+                `;
+
+                // 스페이스바를 누를 때마다 추가 글자들을 빠르게 생성
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => createFallingLetter(), i * 100);
+                }
+            }
+        });
+
+        // 페이지 로드 시 초기 설정
+        window.addEventListener('load', function() {
+            const currentBg = backgrounds[currentBackgroundIndex];
+            backgroundElement.style.backgroundImage = `
+                url(${currentBg.main}),
+                url(${currentBg.glitch})
+            `;
+            
+            // 떨어지는 글자 효과 시작
+            startFallingLetters();
+        });
+    </script>
 </body>
 </html>
