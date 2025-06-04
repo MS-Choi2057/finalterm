@@ -190,11 +190,12 @@
         /* 스페이스바 안내 텍스트 */
         .spacebar-hint {
             position: fixed;
-            bottom: 150px;
-            left: 235px;
-            color: #ff0000;
-            font-family: 'Orbit', sans-serif;
+            bottom: 20%;
+            left: 50%;
+            color: #ffffff;
+            font-family: 'rixyeoljeongdo_regular', sans-serif;
             font-size: 20px;
+             transform: translate(-50%, 0);
             background: rgba(0,0,0,1);
             padding: 10px;
             border-radius: 5px;
@@ -208,7 +209,7 @@
             font-family: 'orbit';
             font-size: 18px;
             font-weight: bold;
-            z-index: 10;
+            z-index: -1;
             pointer-events: none;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
             animation: fall linear;
@@ -216,11 +217,11 @@
 
         @keyframes fall {
             0% {
-                transform: translateY(-100px) rotateZ(0deg);
+                transform: translateY(-100px) ;
                 opacity: 1;
             }
             100% {
-                transform: translateY(100vh) rotateZ(360deg);
+                transform: translateY(100vh) ;
                 opacity: 0.6;
             }
         }
@@ -312,7 +313,7 @@
             },
             {
                 main: 'background2.png',
-                glitch: 'glitch.gif'
+                glitch: 'glitch22.png'
             },
             {
                 main: 'background3.png',
@@ -333,6 +334,7 @@
             '0', '1', '#', '*', '&', '%', '@', '!', '?', '~', '+', '-', '=',
             'X', 'Y', 'Z', 'A', 'B', 'C', 'ERROR', 'NULL', '404', 'BUG'
         ];
+
 
         // 떨어지는 글자 생성 함수
         function createFallingLetter() {
@@ -392,7 +394,7 @@
 
                 // 스페이스바를 누를 때마다 추가 글자들을 빠르게 생성
                 for (let i = 0; i < 5; i++) {
-                    setTimeout(() => createFallingLetter(), i * 100);
+                    setTimeout(() => createFallingLetter(), i * 150);
                 }
             }
         });
@@ -407,6 +409,7 @@
             
             // 떨어지는 글자 효과 시작
             startFallingLetters();
+
         });
     </script>
 </body>
