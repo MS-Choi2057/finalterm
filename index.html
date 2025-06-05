@@ -9,11 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Song+Myung&display=swap" rel="stylesheet">
     <style>
 @font-face {
-    font-family: 'RixYeoljeongdo_Regular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2102-01@1.0/RixYeoljeongdo_Regular.woff') format('woff');
+    font-family: 'PartialSansKR-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
+
         body, html {
             overflow: hidden;
             cursor: url(cursor.cur), auto;
@@ -51,7 +52,7 @@
         }
         
         .header {
-            font-family: 'RixYeoljeongdo_Regular';
+            font-family: 'PartialSansKR-Regular';
             padding: 20px;
             color: #fff;
             text-align: center;
@@ -187,17 +188,42 @@
             color: red;
         }
 
+            .file-icon img {
+            width: 80px;
+            height: 80px;
+            transition: opacity 0.3s ease;
+        }
+
+        .file-icon {
+            position: relative;
+        }
+
+        .file-icon:hover  {
+            width: 100px;
+            height: 100px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+            background-image: url('glitch2.gif');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .file-icon:hover .glitch-overlay {
+            opacity: 1;
+        }
+        
         /* 스페이스바 안내 텍스트 */
         .spacebar-hint {
             position: fixed;
             bottom: 20%;
             left: 50%;
             color: #ffffff;
-            font-family: 'rixyeoljeongdo_regular', sans-serif;
+            font-family: 'PartialSansKR-Regular';
             font-size: 20px;
              transform: translate(-50%, 0);
             background: rgba(0,0,0,1);
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             z-index: 1000;
         }
